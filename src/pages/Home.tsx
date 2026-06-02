@@ -5,18 +5,12 @@ import {
   ArrowRight,
   Search,
   Sparkles,
-  TrendingUp,
   ShoppingBag,
-  Star,
-  Zap,
-  ChevronDown,
-  BadgeCheck,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
 import { products, categories } from '@/data/mockData';
 import { ProductCard } from '@/components/ProductCard';
-import { formatCurrency } from '@/lib/utils';
 
 /* ── helpers ─────────────────────────────────────── */
 
@@ -61,7 +55,7 @@ function SectionHeader({
 export function Home() {
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

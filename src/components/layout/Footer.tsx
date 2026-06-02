@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Mail, MessageCircle, Share2, Play, Heart } from 'lucide-react';
-import { categories, products } from '@/data/mockData';
+import { Mail, MessageCircle, Share2, Play } from 'lucide-react';
 
 export function Footer() {
   return (

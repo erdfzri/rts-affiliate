@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, ShoppingBag } from 'lucide-react';
-import { useThemeStore } from '@/store/useThemeStore';
+import { Search, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Header() {
-  const { theme, toggleTheme } = useThemeStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
