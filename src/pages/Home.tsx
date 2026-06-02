@@ -115,12 +115,6 @@ export function Home() {
           HERO SECTION
       ══════════════════════════════════════════════ */}
       <section className="relative overflow-hidden flex flex-col bg-background pt-6 pb-10 lg:pt-8 lg:pb-14 min-h-[300px] lg:min-h-[500px] justify-center">
-        
-        {/* Floating orbs for light background */}
-        <div className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-float pointer-events-none" />
-        <div className="absolute bottom-1/3 left-1/5 w-56 h-56 rounded-full bg-pink-500/10 blur-3xl animate-float pointer-events-none" style={{ animationDelay: '1.5s' }} />
-        <div className="absolute top-1/2 right-1/3 w-40 h-40 rounded-full bg-amber-500/10 blur-2xl animate-float pointer-events-none" style={{ animationDelay: '3s' }} />
-
         {/* Content */}
         <div className="relative">
           <div className="container-custom w-full">
@@ -183,11 +177,6 @@ export function Home() {
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="flex relative h-[220px] sm:h-[280px] lg:h-[460px] w-full items-center justify-center"
               >
-                {/* Soft glow behind image */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-40 sm:w-64 lg:w-96 h-40 sm:h-64 lg:h-96 rounded-full bg-primary/10 blur-3xl" />
-                </div>
-
                 {/* AI Image */}
                 <motion.img
                   src="/hero-shopping-ai.png"
