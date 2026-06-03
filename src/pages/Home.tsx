@@ -2,10 +2,8 @@ import { useRef, useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import {
-  ArrowRight,
   Search,
   Sparkles,
-  ShoppingBag,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
