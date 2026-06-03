@@ -85,18 +85,32 @@ export function Home() {
   };
 
   const filteredProducts = useMemo(() => {
-    return products.filter((p) => {
-      const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase();
+
+    let result = products.filter((p) => {
       const paddedId = p.id.padStart(3, '0');
-      const matchesSearch = 
+      const matchesSearch =
         paddedId.includes(q) ||
-        p.name.toLowerCase().includes(q) || 
-        p.category.toLowerCase().includes(q) || 
+        p.name.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q) ||
         p.marketplace.some(m => m.toLowerCase().includes(q));
-      
+
       const matchesCategory = selectedCategory ? p.category === selectedCategory : true;
       return matchesSearch && matchesCategory;
     });
+
+    // Prioritaskan produk dengan ID yang persis sama dengan kata kunci pencarian
+    if (q) {
+      result.sort((a, b) => {
+        const aId = a.id.padStart(3, '0');
+        const bId = b.id.padStart(3, '0');
+        if (aId === q && bId !== q) return -1;
+        if (bId === q && aId !== q) return 1;
+        return 0;
+      });
+    }
+
+    return result;
   }, [searchQuery, selectedCategory]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -134,11 +148,10 @@ export function Home() {
                   transition={{ duration: 0.6, delay: 0.25 }}
                   className="text-lg sm:text-3xl lg:text-4xl xl:text-5xl font-black text-foreground leading-[1.1] tracking-tight mb-3 sm:mb-5"
                 >
-                  Temukan Produk{' '}
+                  Produk Viral yang{' '}
                   <span className="text-gradient">
-                    Pilihan Terbaik
-                  </span>{' '}
-                  Untuk Anda
+                    Beneran Worth It
+                  </span>
                 </motion.h1>
 
                 <motion.p
@@ -147,25 +160,31 @@ export function Home() {
                   transition={{ duration: 0.5, delay: 0.35 }}
                   className="text-[10px] sm:text-base text-muted-foreground leading-[1.4] sm:leading-relaxed mb-4 sm:mb-8 max-w-md"
                 >
-                  Kumpulan produk pilihan dari berbagai marketplace terpercaya dengan harga terbaik
-                  dan jaminan kualitas. Belanja lebih cerdas, hemat lebih banyak.
+                  Biar kamu nggak salah beli! Kami kurasi dan review jujur ratusan produk viral dari berbagai marketplace untuk bantu kamu nemuin mana yang beneran <em>worth it</em>. Temukan rekomendasi terbaik pilihan Sofia Review di sini.
                 </motion.p>
 
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={heroInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.45 }}
-                  className="flex flex-wrap gap-3"
+                  className="flex flex-row flex-wrap gap-2 sm:gap-3"
                 >
                   <button
                     onClick={() =>
                       document.getElementById('products-grid')?.scrollIntoView({ behavior: 'smooth' })
                     }
-                    className="inline-flex items-center gap-1.5 sm:gap-2.5 h-9 sm:h-12 px-3 sm:px-7 rounded-lg sm:rounded-2xl gradient-primary text-white text-[10px] sm:text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
+                    className="inline-flex items-center justify-center whitespace-nowrap h-9 sm:h-12 px-5 sm:px-8 rounded-full gradient-primary text-white text-xs sm:text-sm font-medium tracking-wide shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
-                    <ShoppingBag className="h-3 w-3 sm:h-4 sm:w-4" />
-                    Lihat Semua
-                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+                    Lihat Produk Viral ✨
+                  </button>
+                  <button
+                    onClick={() =>
+                      document.getElementById('products-grid')?.scrollIntoView({ behavior: 'smooth' })
+                    }
+                    className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap h-9 sm:h-12 px-5 sm:px-8 rounded-full bg-card/80 backdrop-blur-sm border border-primary/20 text-foreground text-xs sm:text-sm font-medium tracking-wide shadow-sm hover:border-primary/40 hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
+                    Cek Rekomendasi
                   </button>
                 </motion.div>
               </motion.div>
@@ -179,9 +198,9 @@ export function Home() {
               >
                 {/* AI Image */}
                 <motion.img
-                  src="/hero-shopping-ai.png"
-                  alt="AI Shopping Illustration"
-                  className="relative z-10 w-full h-full object-contain mix-blend-multiply"
+                  src="/logo-sofiareview.svg"
+                  alt="Sofia Review Shopping Illustration"
+                  className="relative z-10 w-full h-full object-contain"
                 />
               </motion.div>
             </div>
@@ -197,9 +216,9 @@ export function Home() {
       <section id="products-grid" className="pt-8 pb-16 bg-background min-h-screen">
         <div className="container-custom">
           <SectionHeader
-            badge="Koleksi Lengkap"
-            title="Semua Produk"
-            subtitle="Jelajahi koleksi lengkap produk rekomendasi kami dari berbagai kategori."
+            badge="🛍️ Udah Dicek, Worth It!"
+            title="Yuk, Cari Produk Favoritmu"
+            subtitle="Semua udah kami review dulu — kamu tinggal pilih yang paling cocok buat kamu!"
           />
 
           {/* Sticky Search & Filter */}
@@ -214,7 +233,7 @@ export function Home() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  placeholder="Cari produk, kategori, marketplace..."
+                  placeholder="Cari sesuatu... 🔍"
                   className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
                 />
               </div>
@@ -226,11 +245,10 @@ export function Home() {
               >
                 <button
                   onClick={() => handleCategoryChange(null)}
-                  className={`flex-none snap-start px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                    selectedCategory === null
-                      ? 'gradient-primary text-white shadow-md shadow-primary/25'
-                      : 'bg-card text-foreground border border-border hover:bg-muted hover:border-primary/30'
-                  }`}
+                  className={`flex-none snap-start px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${selectedCategory === null
+                    ? 'gradient-primary text-white shadow-md shadow-primary/25'
+                    : 'bg-card text-foreground border border-border hover:bg-muted hover:border-primary/30'
+                    }`}
                 >
                   Semua
                 </button>
@@ -238,11 +256,10 @@ export function Home() {
                   <button
                     key={cat.id}
                     onClick={() => handleCategoryChange(cat.name)}
-                    className={`flex-none snap-start px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                      selectedCategory === cat.name
-                        ? 'gradient-primary text-white shadow-md shadow-primary/25'
-                        : 'bg-card text-foreground border border-border hover:bg-muted hover:border-primary/30'
-                    }`}
+                    className={`flex-none snap-start px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${selectedCategory === cat.name
+                      ? 'gradient-primary text-white shadow-md shadow-primary/25'
+                      : 'bg-card text-foreground border border-border hover:bg-muted hover:border-primary/30'
+                      }`}
                   >
                     {cat.name}
                   </button>
@@ -258,10 +275,10 @@ export function Home() {
               animate={{ opacity: 1 }}
               className="text-sm text-muted-foreground mb-5"
             >
-              Menampilkan{' '}
+              Nemu{' '}
               <span className="font-semibold text-foreground">{filteredProducts.length}</span> produk
-              {selectedCategory ? ` dalam kategori "${selectedCategory}"` : ''}
-              {searchQuery ? ` untuk "${searchQuery}"` : ''}
+              {selectedCategory ? ` di kategori "${selectedCategory}" 🎯` : ''}
+              {searchQuery ? ` buat "${searchQuery}" ✨` : ''}
             </motion.p>
           )}
 
@@ -285,7 +302,7 @@ export function Home() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              
+
               <div className="flex items-center gap-1">
                 {Array.from({ length: totalPages }).map((_, idx) => (
                   <button
@@ -294,11 +311,10 @@ export function Home() {
                       setCurrentPage(idx + 1);
                       document.getElementById('products-grid')?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className={`w-10 h-10 rounded-xl text-sm font-semibold transition-all ${
-                      currentPage === idx + 1
-                        ? 'gradient-primary text-white shadow-md shadow-primary/25'
-                        : 'border border-border bg-card hover:bg-muted text-foreground'
-                    }`}
+                    className={`w-10 h-10 rounded-xl text-sm font-semibold transition-all ${currentPage === idx + 1
+                      ? 'gradient-primary text-white shadow-md shadow-primary/25'
+                      : 'border border-border bg-card hover:bg-muted text-foreground'
+                      }`}
                   >
                     {idx + 1}
                   </button>
@@ -324,10 +340,10 @@ export function Home() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-24"
             >
-              <div className="text-5xl mb-4">🔍</div>
-              <p className="text-lg font-semibold text-foreground mb-2">Produk tidak ditemukan</p>
+              <div className="text-5xl mb-4">😅</div>
+              <p className="text-lg font-semibold text-foreground mb-2">Aduh, nggak ketemu nih!</p>
               <p className="text-sm text-muted-foreground mb-6">
-                Coba ubah kata kunci atau pilih kategori yang berbeda
+                Coba ganti kata kuncinya atau pilih kategori lain ya — siapa tau ada yang lebih cocok!
               </p>
               <button
                 onClick={() => {
@@ -336,7 +352,7 @@ export function Home() {
                 }}
                 className="inline-flex items-center gap-2 h-10 px-6 rounded-xl gradient-primary text-white text-sm font-semibold shadow-lg hover:opacity-90 transition-all"
               >
-                Reset Filter
+                Lihat Semua Produk 🛍️
               </button>
             </motion.div>
           )}

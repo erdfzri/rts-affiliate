@@ -6,17 +6,17 @@ export function Footer() {
     <footer className="bg-foreground text-background">
       <div className="container-custom pt-10 pb-6">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 pb-8 border-b border-background/10">
+        <div className="flex flex-col gap-8 pb-8 border-b border-background/10">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="max-w-md">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center">
-                <img src="/logo.png" alt="rtsAffiliate" className="w-full h-full object-contain mix-blend-screen" />
+              <div className="flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center">
+                <img src="/logo-sofiareview.svg" alt="Sofia Review" className="w-full h-full object-contain" />
               </div>
-              <span className="text-base font-bold text-white">rtsAffiliate</span>
+              <span className="text-base font-bold text-white uppercase tracking-wider">Sofia Review</span>
             </Link>
             <p className="text-sm text-background/60 leading-relaxed mb-6">
-              Rekomendasi produk terpilih dari berbagai marketplace terpercaya. Temukan produk terbaik dengan harga terbaik.
+              Nggak mau kamu salah beli! Kami review jujur produk-produk viral biar kamu bisa belanja dengan percaya diri. 💕
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -40,34 +40,13 @@ export function Footer() {
 
 
 
-          {/* Info */}
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Informasi</h3>
-            <ul className="space-y-2.5">
-              {[
-                { label: 'Tentang Kami', href: '/about' },
-                { label: 'Cara Kerja Affiliate', href: '#' },
-                { label: 'Kebijakan Privasi', href: '#' },
-                { label: 'Syarat & Ketentuan', href: '#' },
-                { label: 'Hubungi Kami', href: '#' },
-              ].map(({ label, href }) => (
-                <li key={label}>
-                  <Link
-                    to={href}
-                    className="text-sm text-background/60 hover:text-white transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-background/40">
-            © 2026 rtsAffiliate. Hak cipta dilindungi.
+            © 2026 Sofia Review. Hak cipta dilindungi.
           </p>
         </div>
       </div>

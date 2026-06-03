@@ -42,16 +42,14 @@ export function Header() {
         <div className="container-custom">
           <div className="flex h-14 items-center justify-between gap-4">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center">
-                <img
-                  src="/logo.png"
-                  alt="rtsAffiliate"
-                  className="w-full h-full object-contain invert mix-blend-multiply dark:invert-0 dark:mix-blend-screen transition-all duration-500"
-                />
-              </div>
-              <span className="text-base font-bold transition-all duration-500 text-gradient">
-                rtsAffiliate
+            <Link to="/" className="flex items-center gap-2 shrink-0">
+              <img
+                src="/logo-sofiareview.svg"
+                alt="sofiareview"
+                className="h-8 sm:h-10 w-auto object-contain transition-all duration-500"
+              />
+              <span className="text-base font-bold transition-all duration-500 text-gradient tracking-wide">
+                sofiareview
               </span>
             </Link>
 
@@ -63,7 +61,7 @@ export function Header() {
                   to="/"
                   className="px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-foreground/70 hover:text-foreground hover:bg-muted"
                 >
-                  Beranda
+                  🏠 Home
                 </Link>
                 <Link
                   to="/"
@@ -74,14 +72,9 @@ export function Header() {
                   }}
                   className="px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-foreground/70 hover:text-foreground hover:bg-muted"
                 >
-                  Produk
+                  🛍️ Produk
                 </Link>
-                <Link
-                  to="/about"
-                  className="px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-foreground/70 hover:text-foreground hover:bg-muted"
-                >
-                  Tentang
-                </Link>
+
               </nav>
 
               {/* Right Actions */}
@@ -113,7 +106,7 @@ export function Header() {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-muted-foreground" />
                     <input
                       type="text"
-                      placeholder="Cari produk, kategori, marketplace..."
+                      placeholder="Cari sesuatu... 🔍"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       autoFocus
@@ -137,7 +130,7 @@ export function Header() {
               className="lg:hidden border-t bg-background overflow-hidden"
             >
               <div className="container-custom py-4 flex flex-col gap-1">
-                <Link to="/" onClick={() => setIsMobileOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-muted transition-all">Beranda</Link>
+                <Link to="/" onClick={() => setIsMobileOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-muted transition-all">🏠 Home</Link>
                 <Link 
                   to="/" 
                   onClick={() => {
@@ -148,12 +141,12 @@ export function Header() {
                   }} 
                   className="px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-muted transition-all text-foreground/70"
                 >
-                  Produk
+                  🛍️ Produk
                 </Link>
-                <Link to="/about" onClick={() => setIsMobileOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-muted transition-all">Tentang</Link>
+
                 <div className="pt-2 border-t mt-1">
                   <Link to="/" onClick={() => setIsMobileOpen(false)} className="flex justify-center items-center h-10 w-full rounded-xl gradient-primary text-white text-sm font-semibold shadow-md">
-                    Lihat Semua Produk
+                    Lihat Semua Produk 🔥
                   </Link>
                 </div>
               </div>
